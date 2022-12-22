@@ -37,6 +37,11 @@ pipeline {
         echo 'hello from package'
       }
     }
+    stage('Test') {
+      steps {
+        echo 'hello from package'
+      }
+    }
 
   }
 }
