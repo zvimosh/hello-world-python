@@ -14,8 +14,20 @@ pipeline {
     }
 
     stage('Test') {
-      steps {
-        echo 'hello from Test'
+      parallel {
+        stage('Test') {
+          steps {
+            echo 'hello from Test'
+            sh 'sleep 30'
+          }
+        }
+
+        stage('parallel step') {
+          steps {
+            sh 'sleep 20'
+          }
+        }
+
       }
     }
 
