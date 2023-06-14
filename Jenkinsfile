@@ -14,7 +14,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -t hello-world-python .'
+        sh 'docker build -t lidorlg/hello-world-python:${env.BUILD_NUMBER} .'
       }
     }
 
