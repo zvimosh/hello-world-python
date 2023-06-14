@@ -13,8 +13,19 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
-        sh 'docker build -t lidorlg/hello-world-python:$BUILD_NUMBER .'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker build -t lidorlg/hello-world-python:$BUILD_NUMBER .'
+          }
+        }
+
+        stage('Hello from Chuck Norris') {
+          steps {
+            echo 'Hello from chuck norris'
+          }
+        }
+
       }
     }
 
@@ -28,11 +39,29 @@ pipeline {
     }
 
     stage('push to dockerhub') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
-          sh "docker login -u $user -p $pass"
-          sh 'docker push lidorlg/hello-world-python:$BUILD_NUMBER'
+      parallel {
+        stage('push to dockerhub') {
+          steps {
+            withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
+              sh "docker login -u $user -p $pass"
+              sh 'docker push lidorlg/hello-world-python:$BUILD_NUMBER'
+            }
+
+          }
         }
+
+        stage('Chuck Norris') {
+          steps {
+            chuckNorris()
+          }
+        }
+
+      }
+    }
+
+    stage('Clean Workspace') {
+      steps {
+        cleanWs(cleanWhenSuccess: true, cleanWhenFailure: true, cleanWhenAborted: true)
       }
     }
 
