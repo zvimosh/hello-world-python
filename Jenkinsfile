@@ -29,8 +29,10 @@ pipeline {
 
     stage('push to dockerhub') {
       steps {
-        sh 'docker login'
-        sh 'docker push lidorlg/hello-world-python:$BUILD_NUMBER'
+        withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
+          sh "docker login -u $user -p $pass"
+          sh 'docker push lidorlg/hello-world-python:$BUILD_NUMBER'
+        }
       }
     }
 
