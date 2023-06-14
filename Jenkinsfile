@@ -20,7 +20,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'docker run -itd --name hello-world -p 8080:8080 hello-world-python'
+        sh 'docker run -itd --name hello-world -p 8080:8080 lidorlg/hello-world-python:$BUILD_NUMBER'
         sleep 5
         sh 'curl localhost:8080'
         sh 'docker stop hello-world && docker rm hello-world'
@@ -29,7 +29,8 @@ pipeline {
 
     stage('push to dockerhub') {
       steps {
-        sleep 5
+        sh 'docker login'
+        sh 'docker push lidorlg/hello-world-python:$BUILD_NUMBER'
       }
     }
 
