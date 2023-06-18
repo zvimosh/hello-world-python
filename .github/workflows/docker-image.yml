@@ -18,6 +18,8 @@ jobs:
       run: docker build . --file Dockerfile --tag my-image-name:latest
     - name: run & test Container
       run: docker run -itd --name python-hello -p 8080   my-image-name:latest
+    - run: curl localhost:8080
+   
 
 #  Test:
 #    needs: Build
