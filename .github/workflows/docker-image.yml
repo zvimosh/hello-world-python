@@ -9,15 +9,19 @@ on:
 
 jobs:
  
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag my-image-name:latest
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+    
     - name: run & test Container
-      run: docker run --name python-hello   my-image-name:$(date +%s)
+      run: docker run -itd --name python-hello -p 8080   my-image-name:latest
  
   
  
