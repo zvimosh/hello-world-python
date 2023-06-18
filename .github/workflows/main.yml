@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: install requirments
-      run: pip install -r requirements.txt -t .
+      run: pip3 install -r requirements.txt -t .
     - uses: actions/cache@v3
       with:
         path: .  # Note that this path is not influenced by working-directory set in defaults, for example
@@ -24,7 +24,7 @@ jobs:
         path: .  # Note that this path is not influenced by working-directory set in defaults, for example
         key: python-cache
     - name: run & test the app
-      run: python app.py &
+      run: python3 app.py &
     - run: sleep 5 && curl localhost:8080
 #  Package:
 #   needs: Test
