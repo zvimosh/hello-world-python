@@ -26,8 +26,20 @@ jobs:
     - name: run & test the app
       run: python3 app.py &
     - run: sleep 5 && curl localhost:8080
-#  Package:
-#   needs: Test
-#    runs-on: ubuntu-latest
-#    steps:
+  Package:
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Archive Release
+      uses: thedoctor0/zip-release@0.7.1
+      with:
+        type: 'zip'
+        filename: 'release.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
+    - name: Upload Release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+         artifacts: "release.zip"
+         token: ${{ secrets.GITHUB_TOKEN }}
       
