@@ -7,10 +7,11 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
+
+
 jobs:
-
+ 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +19,9 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       
-  Test:
+    Test:
 
-    runs-on: ubuntu-latest
+
     steps: 
     - name: run & test Container
       run: docker run --name python-hello   my-image-name:$(date +%s)
