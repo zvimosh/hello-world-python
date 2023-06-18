@@ -4,7 +4,7 @@ on:
   
 jobs:
   Build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
     - uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
 
   Test:
     needs: Build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/cache@v3
       with:
