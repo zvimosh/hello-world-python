@@ -17,6 +17,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:latest
   Test:
+    needs: Build
     runs-on: ubuntu-latest
     steps:
     
