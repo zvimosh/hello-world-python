@@ -28,7 +28,7 @@ jobs:
     - run: sleep 5 && curl localhost:8080
   Package:
     needs: Test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
 
     - name: Archive Release
