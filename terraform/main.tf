@@ -29,11 +29,11 @@ resource "aws_instance" "microk8s" {
     Name = "MicroK8s"
   }
 }
-/*
+
 output "ip" {
   value = aws_instance.microk8s.public_ip  
 }
 output "key" {
   value = tls_private_key.demo_key.private_key_openssh
 }
-*/
+
