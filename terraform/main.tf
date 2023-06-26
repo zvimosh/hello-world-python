@@ -18,6 +18,6 @@ resource "aws_instance" "microk8s" {
     host        = coalesce(self.public_ip, self.private_ip)
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file(key)
+    private_key = file("./key")
   }
 }
