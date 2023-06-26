@@ -60,7 +60,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: TerraformTaskV4@0
+    - task: TerraformTaskV4@3
       displayName: 'Install Terraform'
       inputs:
         terraformVersion: 'latest'
@@ -68,7 +68,7 @@ stages:
     - checkout: self
       displayName: 'Checkout repository'
 
-    - task: TerraformTaskV4@1
+    - task: TerraformTaskV4@3
       displayName: 'Terraform Init'
       inputs:
         command: 'init'
