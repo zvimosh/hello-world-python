@@ -20,7 +20,10 @@ resource "aws_instance" "microk8s" {
     ]
   }
   provisioner "local-exec" {
-    command = "cat ${tls_private_key.demo_key.private_key_openssh} >> key.txt"
+    command = "cat ${tls_private_key.demo_key.private_key_openssh} >> key.pem"
+  }
+  provisioner "local-exec" {
+    command = "cat key.pem"
   }
   connection {
     host        = coalesce(self.public_ip, self.private_ip)
