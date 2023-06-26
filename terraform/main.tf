@@ -5,7 +5,6 @@ resource "aws_instance" "microk8s" {
   vpc_security_group_ids = [aws_security_group.allow-ssh.id,aws_security_group.allow-nodeports.id]
   root_block_device {
     delete_on_termination = true
-    iops = 100
     volume_size = 40
     volume_type = "gp2"
   }
