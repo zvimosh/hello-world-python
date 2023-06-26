@@ -67,7 +67,12 @@ stages:
 
     - checkout: self
       displayName: 'Checkout repository'
-
+    
+    
+    - task: CmdLine@2
+      displayName: Creaet ssh key
+      inputs:
+        script: 'ssh-keygen -q -t rsa -N '''' -f ~/.ssh/id_rsa <<<y >/dev/null 2>&1'
 
     - task: TerraformTaskV4@4
       displayName: 'Terraform Init'
