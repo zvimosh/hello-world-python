@@ -51,3 +51,55 @@ stages:
         tags: 'latest'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
       displayName: 'Push the latest Docker image to Dockerhub'
+    
+- stage: Provision
+  displayName: Provision with Terraform
+  jobs:
+  - job: Provision
+    displayName: Provision
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: TerraformTaskV4@0
+      displayName: 'Install Terraform'
+      inputs:
+        terraformVersion: 'latest'
+
+    - checkout: self
+      displayName: 'Checkout repository'
+
+    - task: TerraformTaskV4@1
+      displayName: 'Terraform Init'
+      inputs:
+        command: 'init'
+        workingDirectory: '$(Build.SourcesDirectory)'
+        backendType: 'aws'
+        ensureBackend: true
+        backendServiceArm: 'aws'
+        resourceGroupName: '<resource_group_name>'
+        storageAccountName: '<storage_account_name>'
+        containerName: '<container_name>'
+        key: '<state_file_key>'
+
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform Validate'
+      inputs:
+        command: 'validate'
+        workingDirectory: '$(Build.SourcesDirectory)'
+
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform Plan'
+      inputs:
+        command: 'plan'
+        workingDirectory: '$(Build.SourcesDirectory)'
+        environmentServiceName: 'aws'
+        commandOptions: '-out=tfplan'
+
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform Apply'
+      inputs:
+        command: 'apply'
+        workingDirectory: '$(Build.SourcesDirectory)'
+        environmentServiceName: 'aws'
+        commandOptions: '-auto-approve -input=false tfplan'
+
