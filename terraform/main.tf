@@ -2,6 +2,7 @@ resource "aws_instance" "microk8s" {
   ami           = "ami-053b0d53c279acc90"
   instance_type = "t3.medium"
   key_name      = aws_key_pair.mykeypair.key_name
+  vpc_security_group_ids = [aws_security_group.allow-ssh.id,aws_security_group.allow-nodeports.id]
 
   provisioner "file" {
     source      = "script.sh"
