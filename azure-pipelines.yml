@@ -8,7 +8,7 @@ resources:
 
 
 variables:
-  ImageName: 'lidorlg/sample-app-python:latest'
+  ImageName: 'lidorlg/sample-app-python'
 
 stages:
 - stage: Build
