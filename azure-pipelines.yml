@@ -115,7 +115,8 @@ stages:
     - task: CmdLine@2
       displayName: check to see ssh keys
       inputs:
-         script: 'cat $(System.DefaultWorkingDirectory)/terraform/key.txt'
+         script: echo "$(cat $(System.DefaultWorkingDirectory)/terraform/key.txt)"
+
  
         
 
