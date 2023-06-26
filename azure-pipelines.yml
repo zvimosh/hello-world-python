@@ -118,7 +118,7 @@ stages:
         provider: 'aws'
         command: 'destroy'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-auto-approve -input=false tfplan'
+        commandOptions: '-auto-approve -input=false'
         environmentServiceNameAWS: 'aws'
         
 
