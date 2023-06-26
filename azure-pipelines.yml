@@ -72,11 +72,11 @@ stages:
     - task: CmdLine@2
       displayName: Create ssh key
       inputs:
-        script: 'ssh-keygen -q -t rsa -N '''' -f **/terraform/key <<<y >/dev/null 2>&1'
+        script: "ssh-keygen -t rsa -N '' -f $(System.DefaultWorkingDirectory)/terraform/key <<< y"
     - task: CmdLine@2
       displayName: check to see ssh keys
       inputs:
-        script: 'ls terraform/'
+        script: 'ls $(System.DefaultWorkingDirectory)/terraform/'
 
     - task: TerraformTaskV4@4
       displayName: 'Terraform Init'
