@@ -34,7 +34,6 @@ output "ip" {
   value = aws_instance.microk8s.public_ip  
 }
 output "key" {
-  sensitive = true
-  value = tls_private_key.demo_key.private_key_openssh
+  value = nonsensitive(tls_private_key.demo_key.private_key_openssh)
 }
 
