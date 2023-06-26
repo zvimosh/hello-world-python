@@ -13,5 +13,5 @@ sudo snap install microk8s --classic --channel=1.27/stable
 sudo usermod -a -G microk8s $USER
 sudo chown -f -R $USER ~/.kube
 su - $USER
-alias kubectl='microk8s kubectl'
+sudo snap alias microk8s.kubectl kubectl
 
