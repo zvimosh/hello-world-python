@@ -1,9 +1,7 @@
-
-
 resource "aws_instance" "microk8s" {
   ami           = var.AMIS[var.AWS_REGION]
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.mykey.key_name
+  instance_type = "t3.medium"
+  key_name      = aws_key_pair.mykeypair.key_name
 
   provisioner "file" {
     source      = "script.sh"
@@ -19,7 +17,7 @@ resource "aws_instance" "microk8s" {
   connection {
     host        = coalesce(self.public_ip, self.private_ip)
     type        = "ssh"
-    user        = var.INSTANCE_USERNAME
-    private_key = file(var.PATH_TO_PRIVATE_KEY)
+    user        = "ubuntu
+    private_key = file(key)
   }
 }
