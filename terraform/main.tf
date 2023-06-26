@@ -1,5 +1,5 @@
 resource "aws_instance" "microk8s" {
-  ami           = var.AMIS[var.AWS_REGION]
+  ami           = "ami-053b0d53c279acc90"
   instance_type = "t3.medium"
   key_name      = aws_key_pair.mykeypair.key_name
 
