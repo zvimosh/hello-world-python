@@ -19,16 +19,21 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      
+    - task: Docker@2    
       inputs:
         containerRegistry: 'Docker Hub'
         repository: '$(ImageName)'
         command: 'build'
         DockerFile: '**/Dockerfile'
-       
-        
-      displayName: 'Build the Docker image'
+      displayName: "Build the Docker image number $(Build.BuildId)"
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+      displayName: 'Build the latest Docker image'
     - task: Docker@2      
       inputs:
         containerRegistry: 'Docker Hub'
@@ -36,7 +41,13 @@ stages:
         command: 'push'
         
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-      displayName: 'Push the Docker image to Dockerhub'
+      displayName: "Push the Docker image number $(Build.BuildId) to Dockerhub"
 
-
-
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'push'
+        tags: 'latest'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      displayName: 'Push the latest Docker image to Dockerhub'
