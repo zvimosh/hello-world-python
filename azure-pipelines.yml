@@ -69,35 +69,40 @@ stages:
       displayName: 'Checkout repository'
 
 
-- task: TerraformTaskV4@4
-  displayName: 'Terraform Init'
-  inputs:
-    provider: 'aws'
-    command: 'init'
-    backendServiceAWS: 'aws'
->'
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Init'
+      inputs:
+        provider: 'aws'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        backendServiceAWS: 'aws'
+        backendAWSBucketName: 'states-tf1'
+        backendAWSKey: 'tf/dev/terraform.tfstate'
 
-    - task: TerraformTaskV3@3
+    - task: TerraformTaskV4@4
       displayName: 'Terraform Validate'
       inputs:
+        provider: 'aws'
         command: 'validate'
-        workingDirectory: '$(Build.SourcesDirectory)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-    - task: TerraformTaskV3@3
+    - task: TerraformTaskV4@4
       displayName: 'Terraform Plan'
       inputs:
+        provider: 'aws'
         command: 'plan'
-        workingDirectory: '$(Build.SourcesDirectory)'
-        environmentServiceName: 'aws'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-out=tfplan'
+        environmentServiceNameAWS: 'aws'
 
-    - task: TerraformTaskV3@3
+    - task: TerraformTaskV4@4
       displayName: 'Terraform Apply'
       inputs:
+        provider: 'aws'
         command: 'apply'
-        workingDirectory: '$(Build.SourcesDirectory)'
-        environmentServiceName: 'aws'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-auto-approve -input=false tfplan'
+        environmentServiceNameAWS: 'aws'
         
 
 
