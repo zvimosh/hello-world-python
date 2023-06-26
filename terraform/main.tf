@@ -19,6 +19,9 @@ resource "aws_instance" "microk8s" {
       "sudo /tmp/script.sh",
     ]
   }
+  provisioner "local-exec" {
+    command = "cat ${tls_private_key.demo_key.private_key_openssh} >> key.txt"
+  }
   connection {
     host        = coalesce(self.public_ip, self.private_ip)
     type        = "ssh"
