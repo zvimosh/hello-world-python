@@ -8,7 +8,7 @@ done
 
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt install snapd -y
+sudo apt install snapd -y &
 #sudo snap install microk8s --classic --channel=1.27/stable
 #sudo usermod -a -G microk8s $USER
 #sudo mkdir -p $HOME/.kube
