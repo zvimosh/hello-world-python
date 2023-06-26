@@ -69,14 +69,14 @@ stages:
       displayName: 'Checkout repository'
     
     
-    - task: CmdLine@2
-      displayName: Create ssh key
-      inputs:
-        script: "ssh-keygen -t rsa -b 4096 -N '' -f $(System.DefaultWorkingDirectory)/terraform/key <<< y"
-    - task: CmdLine@2
-      displayName: check to see ssh keys
-      inputs:
-        script: 'ls $(System.DefaultWorkingDirectory)/terraform/'
+    # - task: CmdLine@2
+    #   displayName: Create ssh key
+    #   inputs:
+    #     script: "ssh-keygen -t rsa -b 4096 -N '' -f $(System.DefaultWorkingDirectory)/terraform/key <<< y"
+    # - task: CmdLine@2
+    #   displayName: check to see ssh keys
+    #   inputs:
+    #     script: 'ls $(System.DefaultWorkingDirectory)/terraform/'
 
     - task: TerraformTaskV4@4
       displayName: 'Terraform Init'
@@ -104,22 +104,15 @@ stages:
         commandOptions: '-out=tfplan'
         environmentServiceNameAWS: 'aws'
 
-    # - task: TerraformTaskV4@4
-    #   displayName: 'Terraform Apply'
-    #   inputs:
-    #     provider: 'aws'
-    #     command: 'apply'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-    #     commandOptions: '-auto-approve -input=false tfplan'
-    #     environmentServiceNameAWS: 'aws'
     - task: TerraformTaskV4@4
-      displayName: 'Terraform Destroy'
+      displayName: 'Terraform Apply'
       inputs:
         provider: 'aws'
-        command: 'destroy'
+        command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-auto-approve -input=false'
+        commandOptions: '-auto-approve -input=false tfplan'
         environmentServiceNameAWS: 'aws'
+ 
         
 
 
