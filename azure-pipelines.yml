@@ -8,8 +8,9 @@ trigger:
 resources:
 - repo: self
 
+
 variables:
-  tag: '$(Build.BuildId)'
+  ImageName: 'lidorlg/sample-app-python:$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -21,9 +22,23 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'build'
+        DockerFile: '**/Dockerfile'
+       
+        
+      displayName: 'Build the Docker image'
+    - task: Docker@2      
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'push'
+        
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      displayName: 'Push the Docker image to Dockerhub'
+
+
+
