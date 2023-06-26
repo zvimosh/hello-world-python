@@ -112,6 +112,14 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-auto-approve -input=false tfplan'
         environmentServiceNameAWS: 'aws'
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Destory'
+      inputs:
+        provider: 'aws'
+        command: 'destroy'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        commandOptions: '-auto-approve -input=false tfplan'
+        environmentServiceNameAWS: 'aws'
         
 
 
