@@ -17,7 +17,7 @@ resource "aws_instance" "microk8s" {
   connection {
     host        = coalesce(self.public_ip, self.private_ip)
     type        = "ssh"
-    user        = "ubuntu
+    user        = "ubuntu"
     private_key = file(key)
   }
 }
