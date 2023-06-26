@@ -60,26 +60,22 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: TerraformTaskV4@3
-      displayName: 'Install Terraform'
+    - task: TerraformInstaller@1
+      displayName: Install Terraform
       inputs:
         terraformVersion: 'latest'
 
     - checkout: self
       displayName: 'Checkout repository'
 
-    - task: TerraformTaskV4@3
-      displayName: 'Terraform Init'
-      inputs:
-        command: 'init'
-        workingDirectory: '$(Build.SourcesDirectory)'
-        backendType: 'aws'
-        ensureBackend: true
-        backendServiceArm: 'aws'
-        resourceGroupName: '<resource_group_name>'
-        storageAccountName: '<storage_account_name>'
-        containerName: '<container_name>'
-        key: '<state_file_key>'
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Init'
+  inputs:
+    provider: 'aws'
+    command: 'init'
+    backendServiceAWS: 'aws'
+>'
 
     - task: TerraformTaskV3@3
       displayName: 'Terraform Validate'
@@ -102,4 +98,6 @@ stages:
         workingDirectory: '$(Build.SourcesDirectory)'
         environmentServiceName: 'aws'
         commandOptions: '-auto-approve -input=false tfplan'
+        
+
 
