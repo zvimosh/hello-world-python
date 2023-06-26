@@ -20,4 +20,16 @@ resource "aws_instance" "microk8s" {
     user        = "ubuntu"
     private_key = tls_private_key.demo_key.private_key_openssh
   }
+  tags = {
+    Name = MicroK8s"
+  }
 }
+
+output "ip" {
+  value = aws_instance.microk8s.public_ip
+  
+}
+output "key" {
+  value = tls_private_key.demo_key.private_key_openssh
+}
+
