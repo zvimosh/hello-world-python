@@ -72,7 +72,7 @@ stages:
     - task: CmdLine@2
       displayName: Create ssh key
       inputs:
-        script: "ssh-keygen -t rsa -N '' -f $(System.DefaultWorkingDirectory)/terraform/key <<< y"
+        script: "ssh-keygen -t rsa -b 4096 -N '' -f $(System.DefaultWorkingDirectory)/terraform/key <<< y"
     - task: CmdLine@2
       displayName: check to see ssh keys
       inputs:
