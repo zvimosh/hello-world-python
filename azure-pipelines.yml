@@ -112,6 +112,11 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-auto-approve -input=false tfplan'
         environmentServiceNameAWS: 'aws'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)/terraform'
+        artifact: 'published'
+        publishLocation: 'pipeline'
 
  
         
