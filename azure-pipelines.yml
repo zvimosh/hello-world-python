@@ -114,7 +114,7 @@ stages:
         environmentServiceNameAWS: 'aws'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)/terraform'
+        targetPath: '$(System.DefaultWorkingDirectory)/terraform'
         artifact: 'published'
         publishLocation: 'pipeline'
 
