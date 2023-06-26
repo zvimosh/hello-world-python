@@ -70,11 +70,11 @@ stages:
     
     
     - task: CmdLine@2
-      displayName: Creaet ssh key
+      displayName: Create ssh key
       inputs:
         script: 'ssh-keygen -q -t rsa -N '''' -f **/terraform/key <<<y >/dev/null 2>&1'
     - task: CmdLine@2
-      displayName: Creaet ssh key
+      displayName: check to see ssh keys
       inputs:
         script: 'ls terraform/'
 
