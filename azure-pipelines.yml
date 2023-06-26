@@ -112,10 +112,6 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-auto-approve -input=false tfplan'
         environmentServiceNameAWS: 'aws'
-    - task: CmdLine@2
-      displayName: check to see ssh keys
-      inputs:
-         script: echo "$(cat $(System.DefaultWorkingDirectory)/terraform/key.txt)"
 
  
         
