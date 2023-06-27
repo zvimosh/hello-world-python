@@ -12,6 +12,10 @@ resource "aws_instance" "microk8s" {
     source      = "script.sh"
     destination = "/tmp/script.sh"
   }
+  provisioner "file" {
+    source      = "k8s/deploy.yml"
+    destination = "/tmp/deploy.yml"
+  }
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/script.sh",
