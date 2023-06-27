@@ -1,7 +1,7 @@
 
 
-trigger: none
-#- master
+trigger: 
+- master
 
 resources:
 - repo: self
@@ -11,46 +11,46 @@ variables:
   ImageName: 'lidorlg/sample-app-python'
 
 stages:
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       vmImage: ubuntu-latest
-#     steps:
-#     - task: Docker@2    
-#       inputs:
-#         containerRegistry: 'Docker Hub'
-#         repository: '$(ImageName)'
-#         command: 'build'
-#         DockerFile: '**/Dockerfile'
-#       displayName: "Build the Docker image number $(Build.BuildId)"
-#     - task: Docker@2
-#       inputs:
-#         containerRegistry: 'Docker Hub'
-#         repository: '$(ImageName)'
-#         command: 'build'
-#         Dockerfile: '**/Dockerfile'
-#         tags: 'latest'
-#       displayName: 'Build the latest Docker image'
-#     - task: Docker@2      
-#       inputs:
-#         containerRegistry: 'Docker Hub'
-#         repository: '$(ImageName)'
-#         command: 'push'
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2    
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'build'
+        DockerFile: '**/Dockerfile'
+      displayName: "Build the Docker image number $(Build.BuildId)"
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+      displayName: 'Build the latest Docker image'
+    - task: Docker@2      
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'push'
         
-#       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-#       displayName: "Push the Docker image number $(Build.BuildId) to Dockerhub"
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      displayName: "Push the Docker image number $(Build.BuildId) to Dockerhub"
 
-#     - task: Docker@2
-#       inputs:
-#         containerRegistry: 'Docker Hub'
-#         repository: '$(ImageName)'
-#         command: 'push'
-#         tags: 'latest'
-#       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-#       displayName: 'Push the latest Docker image to Dockerhub'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: '$(ImageName)'
+        command: 'push'
+        tags: 'latest'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      displayName: 'Push the latest Docker image to Dockerhub'
     
 - stage: Provision
   displayName: Provision with Terraform
