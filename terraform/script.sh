@@ -8,7 +8,7 @@ done
 sudo apt-get remove needrestart -y
 sudo apt-get update && sudo apt-get --yes --force-yes upgrade
 sudo apt install snapd -y
-sudo snap install microk8s --classic --channel=1.27/stable
+sudo snap install microk8s --classic #--channel=1.27/stable
 sudo usermod -a -G microk8s $USER
 sudo mkdir -p $HOME/.kube
 sudo chown -R $USER:$USER $HOME/.kube
